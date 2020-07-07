@@ -59,7 +59,7 @@
 
     <el-table v-loading="loading" :data="accList" @sort-change='sortChange'  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" prop="id" width="80"  sortable='custom'/>
+      <el-table-column label="序号" prop="accSort" width="80"  sortable='custom'/>
       <el-table-column label="项目名称" prop="projectName" width="150" />
       <el-table-column label="总面积(㎡)" prop="sumArea" sortable='custom' :formatter="(r, c) => { return r.sumArea > 0 ? r.sumArea + ' ㎡': '-'}" width="120" />
       <el-table-column label="总件数(件)" prop="sumLetter" sortable='custom' width="120" />
@@ -73,7 +73,7 @@
       <el-table-column label="设计单位" prop="designUnit" width="120" />
       <el-table-column label="试拼装进度" prop="acceptanceProgress" width="120" />
       <el-table-column label="完成情况" prop="acceptanceStatus" width="100" />
-      <el-table-column label="楼栋(栋)" prop="towerCount" width="100" />
+      <!--<el-table-column label="楼栋(栋)" prop="towerCount" width="100" />-->
       <el-table-column label="备注" prop="note" width="80" />
       <el-table-column label="操作" class-name="small-padding fixed-width" width="120">
         <template slot-scope="scope">
@@ -109,6 +109,9 @@
         <el-form-item label="项目名称" prop="projectName">
           <el-input v-model="form.projectName" placeholder="请输入项目名称"/>
         </el-form-item>
+        <el-form-item label="序号" prop="sumArea">
+          <el-input v-model="form.accSort" placeholder="请输入序号(默认为1)" oninput="value=value.replace(/[^0-9]/g,'')" />
+        </el-form-item>
         <el-form-item label="总面积㎡" prop="sumArea">
           <el-input v-model="form.sumArea" placeholder="请输入总面积" oninput="value=value.replace(/[^0-9.]/g,'')" />
         </el-form-item>
@@ -142,9 +145,9 @@
         <el-form-item label="验收完成情况" prop="acceptanceStatus">
           <el-input v-model="form.acceptanceStatus" placeholder="请输入验收完成情况" />
         </el-form-item>
-        <el-form-item label="楼栋数(栋)" prop="towerCount">
-          <el-input v-model="form.towerCount" placeholder="请输入楼栋数(栋)" oninput="value=value.replace(/[^0-9]/g,'')"/>
-        </el-form-item>
+        <!--<el-form-item label="楼栋数(栋)" prop="towerCount">-->
+          <!--<el-input v-model="form.towerCount" placeholder="请输入楼栋数(栋)" oninput="value=value.replace(/[^0-9]/g,'')"/>-->
+        <!--</el-form-item>-->
         <el-form-item label="备注" prop="note">
           <el-input v-model="form.note" type="textarea" style="width: 300px;" placeholder="请输入内容"></el-input>
         </el-form-item>
@@ -255,6 +258,7 @@
         this.form = {
           id: undefined,
           projectName: undefined,
+          accSort: undefined,
           sumArea: undefined,
           sumLetter: undefined,
           prodErrorCount: undefined,
@@ -334,7 +338,7 @@
           import('../../../utils/Export2Excel').then((excel) => {
             const multiHeader = [['试装验收详情', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']];
             const tHeader = ['序号', '项目名称','总面积(㎡)','总件数(件)','生产错误数','生产错误率','设计错误数','设计错误率','试装错误数','试装错误率','验收日期','设计单位','试拼装进度','完成情况','楼栋(栋)','备注'];
-            const filterVal = ['id', 'projectName','sumArea', 'sumLetter','prodErrorCount','prodErrorRate','designErrorCount','designErrorRate','pretendErrorCount','pretendErrorRate','acceptanceTime','designUnit','acceptanceProgress','acceptanceStatus','towerCount','note']
+            const filterVal = ['accSort', 'projectName','sumArea', 'sumLetter','prodErrorCount','prodErrorRate','designErrorCount','designErrorRate','pretendErrorCount','pretendErrorRate','acceptanceTime','designUnit','acceptanceProgress','acceptanceStatus','towerCount','note']
             const list = this.accList;
             const data = this.formatJson(filterVal, list)
             // 进行所有表头的单元格合并

@@ -94,8 +94,8 @@
       <el-table-column label="剩余(天)" prop="surplusDay" sortable='custom' width="100" />
       <el-table-column label="超期(天)" prop="superTime" sortable='custom' width="100" />
       <el-table-column label="完成(%)" prop="completeRate" sortable='custom' width="100" />
-      <el-table-column label="变换次数" prop="transformCount" sortable='custom' width="100" />
-      <el-table-column label="变换生产" prop="transformProd" sortable='custom' width="100" />
+      <!--<el-table-column label="变换次数" prop="transformCount" sortable='custom' width="100" />-->
+      <!--<el-table-column label="变换生产" prop="transformProd" sortable='custom' width="100" />-->
       <!--<el-table-column label="创建时间" prop="createTime" sortable='custom' width="180" :formatter="(r, c) => {return r.createTime != null ? r.createTime.replace('T', ' ') : '-'}"/>-->
       <!--<el-table-column label="创建人" prop="createName" sortable='custom' width="150" />-->
       <el-table-column label="" prop=""/>
@@ -129,7 +129,7 @@
 
     <!-- 添加或修改对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="750px" append-to-body center>
-      <el-form ref="form" :inline="true" :model="form" label-width="120px">
+      <el-form ref="form" :inline="true" :model="form" label-width="150px">
         <el-form-item label="项目" prop="projectId">
           <el-select v-model="form.projectId" placeholder="选择项目" style="width:180px;">
             <el-option
@@ -142,22 +142,22 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="序号" prop="jobSort" label-width="120px">
+        <el-form-item label="序号" prop="jobSort" label-width="150px">
           <el-input v-model="form.jobSort" placeholder="请输入序号(默认1)" style="width:180px;" oninput="value=value.replace(/[^0-9]/g,'')" />
         </el-form-item>
-        <el-form-item label="楼号" prop="towerNumber" label-width="120px">
+        <el-form-item label="楼号" prop="towerNumber" label-width="150px">
           <el-input v-model="form.towerNumber" placeholder="请输入楼号" style="width:180px;"/>
         </el-form-item>
-        <el-form-item label="标准面积(㎡)" prop="standardArea" label-width="120px">
+        <el-form-item label="标准面积(㎡)" prop="standardArea" label-width="150px">
           <el-input v-model="form.standardArea" placeholder="请输入标准面积(㎡)" oninput="value=value.replace(/[^0-9.]/g,'')" style="width:180px;"/>
         </el-form-item>
-        <el-form-item label="变换或补料(㎡)" prop="noStandardArea" label-width="120px">
+        <el-form-item label="变换或补料(㎡)" prop="noStandardArea" label-width="150px">
           <el-input v-model="form.noStandardArea" placeholder="请输入变换或补料面积" oninput="value=value.replace(/[^0-9.]/g,'')" style="width:180px;"/>
         </el-form-item>
-        <el-form-item label="生产排序" prop="jobOrder" label-width="120px">
+        <el-form-item label="生产排序" prop="jobOrder" label-width="150px">
           <el-input v-model="form.jobOrder" placeholder="请输入序号" oninput="value=value.replace(/[^0-9]/g,'')" style="width:180px;"/>
         </el-form-item>
-        <el-form-item label="下单时间" prop="placOrderTime" label-width="120px">
+        <el-form-item label="下单时间" prop="placOrderTime" label-width="150px">
           <el-date-picker
             v-model="form.placOrderTime"
             type="date"
@@ -167,7 +167,7 @@
             style="width: 180px;">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="生产实际时间" prop="actualStartTime" label-width="120px">
+        <el-form-item label="生产实际时间(开始)" prop="actualStartTime" label-width="150px">
           <el-date-picker
             v-model="form.actualStartTime"
             type="date"
@@ -177,7 +177,7 @@
             style="width: 180px;">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="生产实际时间" prop="actualEndTime" label-width="120px">
+        <el-form-item label="生产实际时间(结束)" prop="actualEndTime" label-width="150px">
           <el-date-picker
             v-model="form.actualEndTime"
             type="date"
@@ -187,7 +187,7 @@
             style="width: 180px;">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="切冲" prop="jodStatusQc" label-width="120px">
+        <el-form-item label="切冲" prop="jodStatusQc" label-width="150px">
           <el-select v-model="form.jodStatusQc" placeholder="请选择" style="width:180px;">
             <el-option
               v-for="item in isCom"
@@ -197,7 +197,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="焊接" prop="jodStatusHj" label-width="120px">
+        <el-form-item label="焊接" prop="jodStatusHj" label-width="150px">
           <el-select v-model="form.jodStatusHj" placeholder="请选择" style="width:180px;">
             <el-option
               v-for="item in isCom"
@@ -207,7 +207,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="校编" prop="jodStatusJb" label-width="120px">
+        <el-form-item label="校编" prop="jodStatusJb" label-width="150px">
           <el-select v-model="form.jodStatusJb" placeholder="请选择" style="width:180px;">
             <el-option
               v-for="item in isCom"
@@ -217,7 +217,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="铁件" prop="jodStatusTj" label-width="120px">
+        <el-form-item label="铁件" prop="jodStatusTj" label-width="150px">
           <el-select v-model="form.jodStatusTj" placeholder="请选择" style="width:180px;">
             <el-option
               v-for="item in isCom"
@@ -227,7 +227,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="试装" prop="jodStatusSz" label-width="120px">
+        <el-form-item label="试装" prop="jodStatusSz" label-width="150px">
           <el-select v-model="form.jodStatusSz" placeholder="请选择" style="width:180px;">
             <el-option
               v-for="item in isCom"
@@ -237,7 +237,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="修改" prop="jodStatusUpdate" label-width="120px">
+        <el-form-item label="修改" prop="jodStatusUpdate" label-width="150px">
           <el-select v-model="form.jodStatusUpdate" placeholder="请选择" style="width:180px;">
             <el-option
               v-for="item in isCom"
@@ -247,12 +247,12 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="变换次数" prop="transformCount" label-width="120px">
-          <el-input v-model="form.transformCount" placeholder="请输入变换次数" oninput="value=value.replace(/[^0-9]/g,'')" style="width:180px;"/>
-        </el-form-item>
-        <el-form-item label="变换生产" prop="transformProd" label-width="120px">
-          <el-input v-model="form.transformProd" placeholder="请输入变换生产" style="width: 180px;"/>
-        </el-form-item>
+        <!--<el-form-item label="变换次数" prop="transformCount" label-width="150px">-->
+          <!--<el-input v-model="form.transformCount" placeholder="请输入变换次数" oninput="value=value.replace(/[^0-9]/g,'')" style="width:180px;"/>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item label="变换生产" prop="transformProd" label-width="150px">-->
+          <!--<el-input v-model="form.transformProd" placeholder="请输入变换生产" style="width: 180px;"/>-->
+        <!--</el-form-item>-->
       </el-form>
 
       <div slot="footer" class="dialog-footer">

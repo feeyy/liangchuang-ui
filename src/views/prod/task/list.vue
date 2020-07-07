@@ -86,7 +86,7 @@
       <el-table-column label="月度" align="center" prop="lcTime.time" width="80" sortable='custom'/>
       <el-table-column label="序号" align="center" prop="taskSort" width="80" sortable='custom'/>
       <el-table-column label="部门" align="center" prop="deptId" :show-overflow-tooltip="true" width="80" />
-      <el-table-column label="工作项" align="center" prop="workItem" :show-overflow-tooltip="true"/>
+      <el-table-column label="工作项" align="center" prop="workItem" :show-overflow-tooltip="true" width="350"/>
       <el-table-column label="计划开始时间" align="center" prop="planStartTime" width="140" sortable='custom'/>
       <el-table-column label="计划结束时间" align="center" prop="planEndTime" width="140" sortable='custom'/>
       <el-table-column label="计划用时(天)" align="center" prop="planDays" width="140" sortable='custom'/>
@@ -110,7 +110,6 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            v-if="scope.row.completeStatus=='未完成'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['prod:task:update']"
           >编辑</el-button>

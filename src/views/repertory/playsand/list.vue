@@ -92,8 +92,8 @@
       <el-table-column label="编号" prop="playSandNumber.playNumber" width="140" sortable='custom'/>
       <el-table-column label="入库重量" prop="putRepertoryWidth" width="140" sortable='custom'/>
       <el-table-column label="出库重量" prop="outRepertoryWidth" width="140" sortable='custom'/>
-      <el-table-column label="创建时间" prop="createTime" width="140" sortable='custom' :formatter="(r, c) => {return r.createTime == null ?  '-' : r.createTime.replace('T', ' ')}"/>
-      <el-table-column label="创建人" prop="createName" width="140" sortable='custom'/>
+      <!--<el-table-column label="创建时间" prop="createTime" width="140" sortable='custom' :formatter="(r, c) => {return r.createTime == null ?  '-' : r.createTime.replace('T', ' ')}"/>-->
+      <!--<el-table-column label="创建人" prop="createName" width="140" sortable='custom'/>-->
       <el-table-column label="" prop=""/>
       <el-table-column label="操作" class-name="small-padding fixed-width" width="140">
         <template slot-scope="scope">
