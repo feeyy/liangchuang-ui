@@ -1,0 +1,61 @@
+1、先下载node.js, 安装
+
+2、安装完成之后检查版本是否安装成功: 
+	执行命令: node -v
+
+3、更新npm 
+	执行命令： npm -g install npm  
+	注意: 不是每次创建项目都需要执行
+	
+4、可以使用国内的镜像：
+	执行命令: npm install -g cnpm --registry=https://registry.npm.taobao.org  
+	使用的时候：cnpm xxxxx (选择安装)
+	还有一种将npm镜像直接替换：npm config set registry https://registry.npm.taobao.org/
+	
+5、安装VUE脚手架: 
+	执行命令: npm install -g vue-cli 
+	注意：不是每次创建项目都需要执行
+	
+6、准备初始化VUE项目, 自己找一个文件夹, 不要初始化到C盘了
+	执行命令:
+		vue init webpack wj-vue
+		# wj-vue 是项目名称
+		
+	然后会提示: 
+		project name 直接回车，直到提示 Install vue-router ? 请输入y 其它的都输入n, 尤其是es-lint;
+		router 是VUE路由
+		
+	#########################
+	如果init非常慢, 可重新安装webpack
+	卸载：npm uninsatll webpack
+	安装：npm install webpack
+	
+7、安装与运行
+	安装: 在项目路径下执行: npm install 或者 npm i
+	运行: 在项目路径下执行: npm run dev
+	
+IDEA 创建VUE项目
+	打开IDEA: + Create new Project
+	
+	然后选择: Static Web -> Vue.js
+	
+	Project Name: 项目名称
+	Project Localtion: 项目地址
+	Node interpreter: node.js 启动程序, 找到安装地址的node.exe
+	vue-cli or @vue/cli: VUE脚手架
+	例如绝对路径C:\Users\yaco\AppData\Roaming\npm\node_modules\vue-cli  IDEA里面应该是: ~AppData\Roaming\npm\node_modules\vue-cli 
+	
+	创建之后IDEA下面有一个工具Terminal打开执行: npm install 或者 npm i 进行安装
+	启动：npm run dev
+	
+Vue-搭配前端框架:
+	1、Element ui框架: https://element.eleme.cn/#/zh-CN/component/transfer
+	2、iView 组件库: https://www.iviewui.com/
+	3、Vuetify : https://vuetifyjs.com/zh-Hans/
+	4、vue-strap : http://yuche.github.io/vue-strap/
+	5、cube-ui : https://didi.github.io/cube-ui/#/zh-CN/example (手机)
+	6、buefy ：https://buefy.github.io/#/
+	7、vue-beauty ： https://fe-driver.github.io/vue-beauty/#/components/button
+	8、at-ui ： https://at-ui.github.io/at-ui/#/zh
+	9、Vue-Blu : https://chenz24.github.io/vue-blu/#/
+	

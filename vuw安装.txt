@@ -1,0 +1,6 @@
+1、npm install -g cnpm --registry=https://registry.npm.taobao.org
+2、如果有问题就删除\node_modules\文件，重新在powershellCMD安装
+     npm install --global --production windows-build-tools
+3、安装modules ：npm install
+4、如果失败，npm install node-sass
+
