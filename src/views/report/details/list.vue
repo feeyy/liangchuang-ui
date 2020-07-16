@@ -60,7 +60,7 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="detailsList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="detailsList" @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="组别" prop="productType.productName"/>
       <el-table-column label="车间分组" prop="productType.workShop" :formatter="(r, c) => {

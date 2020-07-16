@@ -81,7 +81,7 @@
       </el-col>
     </el-row>
 
-    <el-table border v-loading="loading" :data="taskList" @sort-change='sortChange' @selection-change="handleSelectionChange">
+    <el-table border v-loading="loading" :data="taskList" @sort-change='sortChange' @selection-change="handleSelectionChange" :span-method="arraySpanMethod">
       <el-table-column type="selection" width="40" align="center" />
       <el-table-column label="月度" align="center" prop="lcTime.time" width="80" sortable='custom'/>
       <el-table-column label="序号" align="center" prop="taskSort" width="80" sortable='custom'/>
@@ -324,8 +324,38 @@
             }
             this.total = response.total;
             this.loading = false;
+            this.merage();
           }
         );
+      },
+      //表格合并
+      arraySpanMethod ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 3) {
+          const row1 = this.idArr[rowIndex]
+          const col1 = row1 > 0 ? 1 : 0
+          return {
+            rowspan: row1,
+            colspan: col1
+          }
+        }
+      },
+      merage () {
+        this.idArr = []
+        this.idPos = 0
+        for (let i = 0; i < this.taskList.length; i++) {
+          if (i === 0) {
+            this.idArr.push(1)
+            this.idPos = 0
+          } else {
+            if (this.taskList[i].deptId === this.taskList[i - 1].deptId) {
+              this.idArr[this.idPos] += 1
+              this.idArr.push(0)
+            } else {
+              this.idArr.push(1)
+              this.idPos = i
+            }
+          }
+        }
       },
       //排序
       sortChange (column, prop, order){

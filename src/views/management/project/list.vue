@@ -68,11 +68,11 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="projectList" @sort-change='sortChange' @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="projectList" @sort-change='sortChange' @selection-change="handleSelectionChange" :span-method="arraySpanMethod" border>
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" prop="proSort" :show-overflow-tooltip="true" width="100" sortable='custom'/>
-      <el-table-column label="项目名称" prop="projectName" />
       <el-table-column label="客户名称" prop="customerName" />
+      <el-table-column label="项目名称" prop="projectName" />
       <el-table-column label="省" prop="addrProvince" :formatter="(r, c)=> {return getShengName(r.addrProvince);}"/>
       <el-table-column label="市" prop="addrCity" :formatter="(r, c)=> {return getShiName(r.addrProvince, r.addrCity);}"/>
       <!--<el-table-column label="创建时间" prop="createTime" sortable='custom' :show-overflow-tooltip="true" width="150" :formatter="(r, c) => { return r.createTime != null ? r.createTime.replace('T', ' ') : '-'}"/>-->
@@ -251,9 +251,39 @@
               this.projectList = res.rows;
               this.total = res.total;
               this.loading = false;
+              this.merage();
             }
           );
         },500)
+      },
+      //表格合并
+      arraySpanMethod ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 2) {
+          const row1 = this.idArr[rowIndex]
+          const col1 = row1 > 0 ? 1 : 0
+          return {
+            rowspan: row1,
+            colspan: col1
+          }
+        }
+      },
+      merage () {
+        this.idArr = []
+        this.idPos = 0
+        for (let i = 0; i < this.projectList.length; i++) {
+          if (i === 0) {
+            this.idArr.push(1)
+            this.idPos = 0
+          } else {
+            if (this.projectList[i].customerName === this.projectList[i - 1].customerName) {
+              this.idArr[this.idPos] += 1
+              this.idArr.push(0)
+            } else {
+              this.idArr.push(1)
+              this.idPos = i
+            }
+          }
+        }
       },
       /** 获取省 **/
       listProvince() {
@@ -441,8 +471,8 @@
         }).then(() =>{
           import('../../../utils/Export2Excel').then((excel) => {
             const multiHeader = [['项目列表', '', '']];
-            const tHeader = ['序号', '项目名称','客户名称']
-            const filterVal = ['proSort', 'projectName','customerName']
+            const tHeader = ['序号' ,'客户名称','项目名称']
+            const filterVal = ['proSort','customerName', 'projectName']
             const list = this.projectList;
             const data = this.formatJson(filterVal, list)
             // 进行所有表头的单元格合并

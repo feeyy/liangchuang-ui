@@ -51,7 +51,7 @@
       <el-col :xs="24" :sm="12" :lg="6" >
         <div class="chart-wrapper">
           <div class="table-til">
-            本年月总产量
+            本年月总产量（㎡）
           </div>
           <ProductMonth />
         </div>
@@ -59,7 +59,7 @@
       <el-col :xs="24" :sm="12" :lg="6" >
         <div class="chart-wrapper">
           <div class="table-til">
-            近三年总产量
+            近三年总产量（㎡）
           </div>
           <ProductYears />
         </div>
@@ -158,7 +158,7 @@ export default {
       screenWidth: document.body.clientWidth, // 屏幕尺寸
       // 计时
       timingTime: undefined,
-      // 当前时间
+      // 当前时间git remote add origin https://github.com/feeyy/-.git
       toDateTime: undefined
     }
   },

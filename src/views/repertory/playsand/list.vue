@@ -85,9 +85,9 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="playsandList" @sort-change='sortChange' @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="playsandList" @sort-change='sortChange' @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" prop="id" width="80" sortable='custom'/>
+      <!--<el-table-column label="序号" prop="id" width="80" sortable='custom'/>-->
       <el-table-column label="排" prop="playSandRow.playName" width="140" sortable='custom'/>
       <el-table-column label="编号" prop="playSandNumber.playNumber" width="140" sortable='custom'/>
       <el-table-column label="入库重量" prop="putRepertoryWidth" width="140" sortable='custom'/>

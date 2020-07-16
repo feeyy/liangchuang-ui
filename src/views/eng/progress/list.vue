@@ -71,7 +71,7 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="progressList" @sort-change='sortChange'  @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="progressList" @sort-change='sortChange'  @selection-change="handleSelectionChange" :span-method="arraySpanMethod" border>
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" prop="proSort" width="80"  sortable='custom'/>
       <el-table-column label="客户名称" prop="lcProject.customerName" :show-overflow-tooltip="true" width="100" />
@@ -282,9 +282,39 @@
               this.progressList = response.rows;
               this.total = response.total;
               this.loading = false;
+              this.merage();
             }
           );
         },500)
+      },
+      //表格合并
+      arraySpanMethod ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 2|| columnIndex === 3) {
+          const row1 = this.idArr[rowIndex]
+          const col1 = row1 > 0 ? 1 : 0
+          return {
+            rowspan: row1,
+            colspan: col1
+          }
+        }
+      },
+      merage () {
+        this.idArr = []
+        this.idPos = 0
+        for (let i = 0; i < this.progressList.length; i++) {
+          if (i === 0) {
+            this.idArr.push(1)
+            this.idPos = 0
+          } else {
+            if (this.progressList[i].lcProject.projectName === this.progressList[i - 1].lcProject.projectName) {
+              this.idArr[this.idPos] += 1
+              this.idArr.push(0)
+            } else {
+              this.idArr.push(1)
+              this.idPos = i
+            }
+          }
+        }
       },
       //排序
       sortChange (column, prop, order){

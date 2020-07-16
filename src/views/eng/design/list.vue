@@ -71,7 +71,7 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="designList" @sort-change='sortChange'  @selection-change="handleSelectionChange">
+    <el-table border v-loading="loading" :data="designList"  @sort-change='sortChange'  @selection-change="handleSelectionChange"  :span-method="arraySpanMethod">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" prop="desSort" width="80"  sortable='custom'/>
       <el-table-column label="客户名称" prop="lcProject.customerName" :show-overflow-tooltip="true" width="100" />
@@ -82,7 +82,7 @@
       <el-table-column label="变更次数" prop="changeCount" sortable='custom' width="120" />
       <el-table-column label="变更说明" prop="changeNote" sortable='custom' width="120" />
       <el-table-column label="底图确认时间" prop="bottomMapTime" sortable='custom' width="130" />
-      <el-table-column label="配模计划开始时间" prop="withTemTime" sortable='custom' width="150" />
+      <!--<el-table-column label="配模计划开始时间" prop="withTemTime" sortable='custom' width="150" />-->
       <el-table-column label="设计计划开始时间" prop="planStartTime" sortable='custom' width="150" />
       <el-table-column label="设计计划结束时间" prop="planEndTime" sortable='custom' width="150" />
       <el-table-column label="设计实时开始时间" prop="planRealStartTime" sortable='custom' width="150" />
@@ -91,7 +91,7 @@
       <el-table-column label="情况B" prop="planStatusB" sortable='custom' width="100" :formatter="(r, c) => {return r.planStatusB == 0 ? '未完成' : '已完成'}"/>
       <el-table-column label="情况D" prop="planStatusD" sortable='custom' width="100" :formatter="(r, c) => {return r.planStatusD == 0 ? '未完成' : '已完成'}"/>
       <el-table-column label="情况ST" prop="planStatusSt" sortable='custom' width="100" :formatter="(r, c) => {return r.planStatusSt == 0 ? '未完成' : '已完成'}"/>
-      <el-table-column label="情况B1" prop="planStatusBl" sortable='custom' width="100" :formatter="(r, c) => {return r.planStatusBl == 0 ? '未完成' : '已完成'}"/>
+      <el-table-column label="情况BL" prop="planStatusBl" sortable='custom' width="100" :formatter="(r, c) => {return r.planStatusBl == 0 ? '未完成' : '已完成'}"/>
       <el-table-column label="剩余时间(天)" prop="surplusDay" sortable='custom' width="120" />
       <el-table-column label="超期时间(天)" prop="superTime" sortable='custom' width="120" />
       <el-table-column label="完成率(%)" prop="completeReal" sortable='custom' width="120" />
@@ -269,7 +269,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="完成情况B1" prop="planStatusBl" label-width="140px">
+        <el-form-item label="完成情况BL" prop="planStatusBl" label-width="140px">
           <el-select v-model="form.planStatusBl" placeholder="请选择" style="width:180px;">
             <el-option
               v-for="item in isCom"
@@ -349,7 +349,9 @@
     created() {
       this.getEngTimes();
       this.queryDesign();
+
     },
+
     methods: {
       /** 获取项目的时间列表*/
       getEngTimes() {
@@ -376,10 +378,12 @@
               this.designList = response.rows;
               this.total = response.total;
               this.loading = false;
+              this.merage ();
             }
           );
         },500)
       },
+
       //排序
       sortChange (column, prop, order){
         if (column.order != null) {
@@ -390,6 +394,39 @@
         this.queryParams.orderByColumn = column.prop
         this.queryDesign(this.queryParams);
       },
+
+      //表格合并
+      arraySpanMethod ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 2|| columnIndex === 3) {
+          const row1 = this.idArr[rowIndex]
+          const col1 = row1 > 0 ? 1 : 0
+          return {
+            rowspan: row1,
+            colspan: col1
+          }
+        }
+      },
+      merage () {
+        this.idArr = []
+        this.idPos = 0
+        for (let i = 0; i < this.designList.length; i++) {
+          if (i === 0) {
+            this.idArr.push(1)
+            this.idPos = 0
+          } else {
+            if (this.designList[i].lcProject.projectName === this.designList[i - 1].lcProject.projectName) {
+              this.idArr[this.idPos] += 1
+              this.idArr.push(0)
+            } else {
+              this.idArr.push(1)
+              this.idPos = i
+            }
+          }
+        }
+      },
+
+
+
       // 取消按钮
       cancel() {
         this.open = false;
@@ -492,7 +529,7 @@
             const multiHeader = [['(项目)设计工作报表', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']];
             const tHeader = ['序号', '项目名称', '楼号', '模板面积约(㎡)', '首次接图时间', '变更次数',
               '变更说明', '地图确认时间', '配模计划开始时间', '设计计划开始时间', '设计计划结束时间',
-              '设计实时开始时间', '设计实时结束时间', '完成情况W', '完成情况B', '完成情况D', '完成情况ST', '完成情况B1',
+              '设计实时开始时间', '设计实时结束时间', '完成情况W', '完成情况B', '完成情况D', '完成情况ST', '完成情况BL',
               '剩余天数(天)', '超期时间(天)', '完成率(%)', '变换次数', '变换下单']
             const filterVal = ['desSort', 'projectId', 'towerNumber', 'templateArea', 'firstPickMap', 'changeCount',
               'changeNote', 'bottomMapTime', 'withTemTime', 'planStartTime', 'planEndTime',

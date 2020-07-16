@@ -77,9 +77,9 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="sprayingList" @sort-change='sortChange' @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="sprayingList" @sort-change='sortChange' @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" prop="id" width="80" sortable='custom'/>
+      <!--<el-table-column label="序号" prop="id" width="80" sortable='custom'/>-->
       <el-table-column label="型材" prop="artName" width="140" sortable='custom'/>
       <el-table-column label="单件面积" prop="singArea" width="110" sortable='custom'/>
       <el-table-column label="期初库存件数" prop="earlyRepertoryNumber" width="130" sortable='custom'/>

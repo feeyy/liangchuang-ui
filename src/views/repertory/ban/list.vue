@@ -77,9 +77,9 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="banProductList" @sort-change='sortChange' @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="banProductList" @sort-change='sortChange' @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" prop="id" width="80" sortable='custom'/>
+      <!--<el-table-column label="序号" prop="id" width="80" sortable='custom'/>-->
       <el-table-column label="模板规格" prop="artName" width="140" sortable='custom'/>
       <el-table-column label="期初库存数量" prop="earlyRepertoryNumber" width="140" sortable='custom'/>
       <el-table-column label="期初库存面积" prop="earlyRepertoryArea" width="140" sortable='custom'/>

@@ -85,7 +85,7 @@
     </el-row>
 
     <el-table v-loading="loading" :data="prodictMaryList" @sort-change='sortChange'
-              @selection-change="handleSelectionChange">
+              @selection-change="handleSelectionChange" :span-method="arraySpanMethod" border>
       <el-table-column type="selection" width="55" align="center"/>
       <!--<el-table-column label="序号" prop="id" sortable='custom' width="80"/>-->
       <el-table-column label="年/月" prop="isYears" sortable='custom' width="80" :formatter="(r, c) => {return r.isYears == 1 ? '全年' : r.whenYearsMonth.substring(0, 7)}"/>
@@ -240,8 +240,38 @@
             this.prodictMaryList = response.rows
             this.total = response.total
             this.loading = false
+            this.merage();
           })
         },500)
+      },
+      //表格合并
+      arraySpanMethod ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 1) {
+          const row1 = this.idArr[rowIndex]
+          const col1 = row1 > 0 ? 1 : 0
+          return {
+            rowspan: row1,
+            colspan: col1
+          }
+        }
+      },
+      merage () {
+        this.idArr = []
+        this.idPos = 0
+        for (let i = 0; i < this.prodictMaryList.length; i++) {
+          if (i === 0) {
+            this.idArr.push(1)
+            this.idPos = 0
+          } else {
+            if (this.prodictMaryList[i].whenYearsMonth === this.prodictMaryList[i - 1].whenYearsMonth) {
+              this.idArr[this.idPos] += 1
+              this.idArr.push(0)
+            } else {
+              this.idArr.push(1)
+              this.idPos = i
+            }
+          }
+        }
       },
       refreshData() {
         this.loading = true

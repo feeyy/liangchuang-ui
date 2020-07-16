@@ -77,9 +77,9 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="aluminumList" @sort-change='sortChange' @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="aluminumList" @sort-change='sortChange' @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" prop="id" width="80" sortable='custom'/>
+      <!--<el-table-column label="序号" prop="id" width="80" sortable='custom'/>-->
       <el-table-column label="名称" prop="artName" width="180" sortable='custom'/>
       <el-table-column label="单件比重(kg)" prop="singWidth" width="130" sortable='custom'>
         <template slot-scope="scope">

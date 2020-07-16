@@ -84,9 +84,9 @@
     </el-row>
 
     <el-table v-loading="loading" :data="prodTaskMaryList" @sort-change='sortChange'
-              @selection-change="handleSelectionChange" columns-width-drag>
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="序号" prop="id" sortable='custom' width="80"/>
+              @selection-change="handleSelectionChange" columns-width-drag border>
+      <!--<el-table-column type="selection" width="55" align="center"/>-->
+      <!--<el-table-column label="序号" prop="id" sortable='custom' width="80"/>-->
       <el-table-column label="部门" prop="dept.deptName" sortable='custom' width="110"/>
       <el-table-column label="负责人" prop="principalName"/>
       <el-table-column label="计划总量(条)" prop="planCount" sortable='custom' width="120"/>

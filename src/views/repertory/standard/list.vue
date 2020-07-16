@@ -87,7 +87,7 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="standardList" @sort-change='sortChange' @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="standardList" @sort-change='sortChange' @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
       <!--<el-table-column label="序号" prop="id" width="80" sortable='custom'/>-->
       <el-table-column label="模板名称" prop="artName" width="140" sortable='custom'/>

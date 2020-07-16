@@ -71,13 +71,13 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="businessList" @sort-change='sortChange'  @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="businessList"  @sort-change='sortChange'  @selection-change="handleSelectionChange" :span-method="arraySpanMethod" border>
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" prop="busSort" width="80" sortable='custom'/>
-      <el-table-column label="客户名称" prop="lcProject.customerName" :show-overflow-tooltip="true" width="100" />
-      <el-table-column label="项目名称" prop="lcProject.projectName" :show-overflow-tooltip="true" width="100" />
-      <el-table-column label="楼号" prop="towerNumber" width="50"/>
-      <el-table-column label="施工层数" prop="toLayer" sortable='custom' width="100" />
+      <el-table-column label="客户名称" prop="lcProject.customerName" :show-overflow-tooltip="true" width="120" />
+      <el-table-column label="项目名称" prop="lcProject.projectName" :show-overflow-tooltip="true" width="120" />
+      <el-table-column label="楼号" prop="towerNumber" width="100"/>
+      <el-table-column label="施工层数" prop="toLayer" sortable='custom' width="120" />
       <el-table-column label="占地面积(㎡)" prop="occupyArea" sortable='custom' width="120" />
       <el-table-column label="中标时间" prop="winningTime" sortable='custom' width="120" />
       <el-table-column label="中标通知书" prop="isWinningNotice" sortable='custom' width="120" :formatter="(r, c) => {return r.isWinningNotice == 0 ? '否' : '是'}"/>
@@ -86,9 +86,9 @@
       <el-table-column label="完成报量-止" prop="completeSubCheck" sortable='custom' width="120" />
       <el-table-column label="完成报量-共" prop="completeSubTotal" sortable='custom' width="120" />
       <el-table-column label="合同外签回份数" prop="signOutside" sortable='custom' width="140" />
-      <el-table-column label="实际完成层数" prop="actualCompletion" sortable='custom' width="130" />
-      <el-table-column label="已完报量率(%)" prop="subRate" sortable='custom' width="150" />
-      <el-table-column label="是否有书面交底" prop="isWritten" sortable='custom' width="150" :formatter="(r, c) => {return r.isWritten == 0 ? '否' : '是'}"/>
+      <el-table-column label="实际完成层数" prop="actualCompletion" sortable='custom' width="140" />
+      <el-table-column label="已完报量率(%)" prop="subRate" sortable='custom' width="140" />
+      <el-table-column label="是否有书面交底" prop="isWritten" sortable='custom' width="140" :formatter="(r, c) => {return r.isWritten == 0 ? '否' : '是'}"/>
       <!--<el-table-column label="创建时间" prop="createTime" sortable='custom' width="180" :formatter="(r, c) => {return r.createTime != null ? r.createTime.replace('T', ' ') : '-'}"/>-->
       <!--<el-table-column label="创建人" prop="createName" sortable='custom' width="150" />-->
       <el-table-column label="" prop=""/>
@@ -260,7 +260,7 @@
     methods: {
       /** 获取项目的时间列表*/
       getEngTimes() {
-        getEngTime().then( response => {
+        getEngTime().then(response => {
           this.times = response.data;
           // 时间设置默认值
           this.queryParams.timeId = this.times[0].id;
@@ -270,23 +270,54 @@
       },
       /** 通过时间ID获取时间对象的项目集合*/
       getProjects() {
-        getProjects(this.queryParams.timeId).then( response => {
+        getProjects(this.queryParams.timeId).then(response => {
           this.projects = response.data;
         });
       },
       /** (项目)经营合约列表 */
       queryBusiness() {
         this.loading = true;
-        setTimeout(()=>{
+        setTimeout(() => {
           queryBusiness(this.queryParams).then(
             response => {
               this.businessList = response.rows;
               this.total = response.total;
               this.loading = false;
+              this.merage ();
             }
           );
-        },500)
+        }, 500)
       },
+      //表格合并
+      arraySpanMethod ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 2|| columnIndex === 3) {
+          const row1 = this.idArr[rowIndex]
+          const col1 = row1 > 0 ? 1 : 0
+          return {
+            rowspan: row1,
+            colspan: col1
+          }
+        }
+      },
+      merage () {
+        this.idArr = []
+        this.idPos = 0
+        for (let i = 0; i < this.businessList.length; i++) {
+          if (i === 0) {
+            this.idArr.push(1)
+            this.idPos = 0
+          } else {
+            if (this.businessList[i].lcProject.projectName === this.businessList[i - 1].lcProject.projectName) {
+              this.idArr[this.idPos] += 1
+              this.idArr.push(0)
+            } else {
+              this.idArr.push(1)
+              this.idPos = i
+            }
+          }
+        }
+      },
+
       //排序
       sortChange (column, prop, order){
         if (column.order != null) {

@@ -93,7 +93,7 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="maryList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="maryList" @selection-change="handleSelectionChange" border>
       <!--<el-table-column type="selection" width="55" align="center" />-->
       <el-table-column label="仓库名称" prop="artName" width="140"/>
       <el-table-column label="新/旧" prop="isNew" width="140">

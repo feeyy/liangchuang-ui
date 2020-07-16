@@ -4,7 +4,7 @@
           工程汇总表
         </div>
     <div id="gcTable">
-    <el-table width="100%" max-height="300px" v-loading="loading" :data="progressMaryList" border >
+    <el-table width="100%" max-height="300px" v-loading="loading" :data="progressMaryList" :span-method="arraySpanMethod" border >
       <!--<el-table-column type="selection" width="55" align="center" />-->
       <!--<el-table-column label="年度工程汇总预览" align="center">-->
       <el-table-column label="客户名称" prop="customerName" :show-overflow-tooltip="true" />
@@ -79,9 +79,39 @@
               this.progressMaryList = response.rows;
               this.total = response.total;
               this.loading = false;
+              this.merage();
             }
           );
         },500)
+      },
+      //表格合并
+      arraySpanMethod ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 1||columnIndex === 2) {
+          const row1 = this.idArr[rowIndex]
+          const col1 = row1 > 0 ? 1 : 0
+          return {
+            rowspan: row1,
+            colspan: col1
+          }
+        }
+      },
+      merage () {
+        this.idArr = []
+        this.idPos = 0
+        for (let i = 0; i < this.progressMaryList.length; i++) {
+          if (i === 0) {
+            this.idArr.push(1)
+            this.idPos = 0
+          } else {
+            if (this.progressMaryList[i].projectName === this.progressMaryList[i - 1].projectName) {
+              this.idArr[this.idPos] += 1
+              this.idArr.push(0)
+            } else {
+              this.idArr.push(1)
+              this.idPos = i
+            }
+          }
+        }
       },
       // //排序
       // sortChange (column, prop, order){
